@@ -1,0 +1,21 @@
+.page-header {
+	text-align:center;
+	font-family: Courier;
+}
+#tagline {
+	font-family: 'Tangerine', serif;
+	font-size: 38px;
+}
+
+.mockbox {
+	border: 4px dashed #ccc;
+	margin-bottom:5px;
+}
+.mockh	{
+	height: 300px;
+}
+
+body {
+	background-image:url("tiny_grid.png");
+	background-repeat: repeat;
+}

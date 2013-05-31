@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine">
+<link href="bootstrap.css" type="text/css" rel="stylesheet"/>
+<link href="custom.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+<div class="page-header"><h1><span id="title">case sensitivity</span><small id="tagline"> with Bit, A, and a</small></h1></div>
+
+<div class="row-fluid">
+	<div class="span6 mockh mockbox">sdkfjksldf</div>
+	<div class="span6 mockh mockbox">sdkfjksldf</div>
+</div>
+
+<div class="row-fluid">
+	<div class="span12 mockbox" style="height:200px">sdfjhsdkjf</div>
+</div>
+
+<div class="row-fluid">
+	<div class="span4 mockh mockbox">sjlkdfjsdlkf</div>
+	<div class="span4 mockh mockbox">sjlkdfjsdlkf</div>
+	<div class="span4 mockh mockbox">sjlkdfjsdlkf</div>
+</div>
+
+<div class="row-fluid">
+	<div class="span3 mockbox">
+		<svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink"></svg>
+	</div>
+	<div class="span9 mockbox">sdjfhjksdf</div>
+</div>
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script>
+
+function fisherYates ( myArray ) {
+  var i = myArray.length, j, temp;
+  if ( i === 0 ) return false;
+  while ( --i ) {
+     j = Math.floor( Math.random() * ( i + 1 ) );
+     temp = myArray[i];
+     myArray[i] = myArray[j]; 
+     myArray[j] = temp;
+   }
+}
+
+String.prototype.randomize = function()	{
+	letters = this.split("");
+	fisherYates(letters)
+	return letters.join("");
+}
+
+letters = "abcdefghijklmnopqrstuvwxyz";
+letters += letters.toUpperCase();
+//letters=letters.randomize();
+
+var numLetters = 16;
+
+data = [];
+
+for (x in d3.range(numLetters)) {
+  y = letters.charAt(x)
+  data.push(y)
+}
+
+
+function charToDecimal(d) {
+  return d.charCodeAt(0).toString()
+}
+
+function decimalToBinary(d) {
+  bd = parseInt(d,10).toString(2);
+  while(bd.length < 8) {
+    bd = "0" + bd;
+  }
+  //return "a";
+  return bd;
+}
+
+function binaryToChar(d)	{
+	bd = parseInt(d,2);
+	return String.fromCharCode(bd);
+}
+
+var svg = d3.select("svg")
+
+var xpos = 0;
+var ypos = 0;
+var width = 200;
+var height = 500;
+var c = svg.append("rect")
+.attr("x",xpos)
+.attr("y",ypos)
+.attr("fill","#292929")
+.attr("width",width)
+.attr("height",height);
+
+offset = 0;
+data.forEach(function(d)	{
+  d2 = charToDecimal(d);
+  bd = decimalToBinary(d2);
+  svg.append("text")
+  .text(bd)
+  .attr("fill", "#FFFFFF")
+  .attr("font-size",25)
+  .attr("font-family","Courier")
+  .attr("x",xpos+width/5)
+  .attr("y",offset+=30)
+	.attr("class","binary")
+  .on("mouseenter", function ()	{
+		toggle_screen(d,this);
+		rand = false;
+  })
+  .on("mouseleave", function()	{
+		toggle_screen("",this);
+		rand = true;
+  })
+});
+
+function toggle_screen(data,that)	{
+	color = '#FFaaFF';
+	d3.selectAll('.binary').attr('fill','#FFFFFF');
+	screen.text(data);
+	d3.select(that).attr('fill',color);
+}
+
+var screenxpos = 0;
+var screenypos = height + 10;
+var screenheight = 160;
+var screenwidth = width;
+
+var c2 = svg.append("rect")
+.attr("x",screenxpos)
+.attr("y",screenypos)
+.attr("fill","#292929")
+.attr("width",200)
+.attr("height",160);
+
+var screen = svg.append("text")
+.attr("x", parseInt(c2.attr("x"),10) + 54)
+.attr("y", parseInt(c2.attr("y"),10) + 115)
+.attr("fill","#FFaaFF")
+.attr("font-size",147)
+.attr("font-family","Courier")
+
+var rand = true;
+function rando()	{
+	if (rand)	{
+		r = Math.floor(Math.random() * numLetters);
+		that = d3.selectAll(".binary")
+		that2 = that[0][r];
+		s = binaryToChar(that2.textContent);
+		toggle_screen(s,that2);
+	}
+	setTimeout(rando,5000);
+}
+rando();
+
+String.prototype.toRandCase = function()	{
+	letters = this.split("");
+	for (i = 0; i<letters.length; i++)	{
+		l = letters[i];
+		r = Math.random();
+		console.log(l);
+		if (r > 0.5)	{
+			letters[i]= l.toUpperCase();
+		}
+		else	{
+			letters[i] = l.toLowerCase();
+		}
+		
+	}
+	return letters.join("");
+}
+
+function casetitle()	{
+	cc = d3.select('#title')
+	cc.html(cc.html().toRandCase());
+	setTimeout(casetitle,2500);
+}
+casetitle();
+
+</script>
+</body>
+</html>
