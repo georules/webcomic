@@ -8,8 +8,8 @@
 }
 
 .mockbox {
-	border: 4px dashed #ccc;
-	margin-bottom:5px;
+	/*border: 4px dashed #ccc;*/
+	margin-bottom:20px;
     background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #ddd), color-stop(0.25, #ddd), color-stop(0.25, #ccc), color-stop(0.5, #ccc), color-stop(0.5, #ddd), color-stop(0.75, #ddd), color-stop(0.75, #ccc));
     background-size: 20px 20px;
     width:100%;
