@@ -32,7 +32,7 @@
 	<div class="span9 mockbox">sdjfhjksdf</div>
 </div>
 
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="d3.v3.min.js" charset="utf-8"></script>
 <script>
 
 function fisherYates ( myArray ) {
@@ -52,8 +52,7 @@ String.prototype.randomize = function()	{
 	return letters.join("");
 }
 
-letters = "abcdefghijklmnopqrstuvwxyz";
-letters += letters.toUpperCase();
+letters = "aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ";
 //letters=letters.randomize();
 
 var numLetters = 16;
@@ -90,6 +89,13 @@ var xpos = 0;
 var ypos = 0;
 var width = 200;
 var height = 500;
+var screenxpos = 0;
+var screenypos = height + 10;
+var screenheight = 160;
+var screenwidth = width;
+
+svg.attr("width",width)
+	.attr("height",height+screenheight);
 var c = svg.append("rect")
 .attr("x",xpos)
 .attr("y",ypos)
@@ -126,11 +132,6 @@ function toggle_screen(data,that)	{
 	d3.select(that).attr('fill',color);
 }
 
-var screenxpos = 0;
-var screenypos = height + 10;
-var screenheight = 160;
-var screenwidth = width;
-
 var c2 = svg.append("rect")
 .attr("x",screenxpos)
 .attr("y",screenypos)
@@ -140,7 +141,7 @@ var c2 = svg.append("rect")
 
 var screen = svg.append("text")
 .attr("x", parseInt(c2.attr("x"),10) + 54)
-.attr("y", parseInt(c2.attr("y"),10) + 115)
+.attr("y", parseInt(c2.attr("y"),10) + 120)
 .attr("fill","#FFaaFF")
 .attr("font-size",147)
 .attr("font-family","Courier")
